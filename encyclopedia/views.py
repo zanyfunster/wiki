@@ -38,7 +38,10 @@ def entry(request, title):
             "search_form": SearchQuery
         })
 
-    # if title in URL is found, takes user to that entry's page
+    # if title found, convert Markdown to HTML for entry page
+    entry = util.converter(title)
+
+    # go to that entry's page
     return render(request, "encyclopedia/entry.html", {
         "entry": entry,
         "title": title,
@@ -180,7 +183,7 @@ def edit(request):
         edit_request = request.POST
         title = edit_request["title"]
 
-        # get entry content
+        # get entry content as Markdown
         entry = util.get_entry(title)
 
         # pre-fill form with entry and title as values, as_p formats form as paragraphs
@@ -209,10 +212,9 @@ def random(request):
     z = len(all_titles)
     rando_num = randint(0, z)
 
-    # index to rando_num in list of titles
+    # index to rando_num in list of titles and convert to HTML
     rando_title = all_titles[rando_num]
-
-    entry = util.get_entry(rando_title)
+    entry = util.converter(rando_title)
 
     return render(request, "encyclopedia/entry.html", {
             "entry": entry,

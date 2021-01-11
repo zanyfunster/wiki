@@ -1,1 +1,0 @@
-sophie is very amused by these.
