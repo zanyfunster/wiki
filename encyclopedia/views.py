@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+import random
 
 from . import util
 
@@ -197,3 +198,23 @@ def edit(request):
     return render(request, "encyclopedia/index.html", {
         "search_form": SearchQuery
     })
+
+# display a RANDOM entry 
+def random(request):
+
+    # get all entry titles
+    all_titles = util.list_entries()
+
+    # generate a random integer between 0 and length of all_titles
+    rando_num = random.randint(0, len(all_titles))
+
+    # index to rando_num in list of titles
+    rando_title = all_titles[rando_num]
+
+    entry = util.get_entry(rando_title)
+
+    return render(request, "encyclopedia/entry.html", {
+            "entry": entry,
+            "search_form": SearchQuery,
+            "title": rando_title
+        })
