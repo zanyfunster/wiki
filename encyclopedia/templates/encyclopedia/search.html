@@ -1,0 +1,27 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Search Results</h1>
+
+    {% if num_matches == 0 %}
+    
+        <p>No results found. You can search again or <a href="{% url 'wiki:add' %}">create a new entry</a> for {{ query }}.</p>
+
+    {% else %}
+        <p>No entries with {{ query }} as title. Most comparable results: 
+
+        <ul>
+
+            {% for title in title_matches %}
+                <li><a href="/wiki/{{ title }}">{{ title }}</a></li>
+            {% endfor %}
+
+        </ul>
+
+    {% endif %}
+
+{% endblock %}
