@@ -3,7 +3,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
-import random
+from random import randint
 
 from . import util
 
@@ -206,7 +206,8 @@ def random(request):
     all_titles = util.list_entries()
 
     # generate a random integer between 0 and length of all_titles
-    rando_num = random.randint(0, len(all_titles))
+    z = len(all_titles)
+    rando_num = randint(0, z)
 
     # index to rando_num in list of titles
     rando_title = all_titles[rando_num]
