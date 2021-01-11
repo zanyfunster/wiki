@@ -139,6 +139,7 @@ def add(request):
             # if there is no existing entry with the title
             if entry is None:
 
+                title = title.capitalize()
                 entry = new_entry.cleaned_data["content"]
                 util.save_entry(title, entry)
                 messages.add_message(request, messages.SUCCESS, 'New entry added successfully!')
@@ -156,6 +157,8 @@ def add(request):
                     entry = new_entry.cleaned_data["content"] 
                     util.save_entry(title, entry)
                     messages.add_message(request, messages.SUCCESS, 'Entry edited successfully!')
+
+        entry = util.converter(title)
 
         return render(request, "encyclopedia/entry.html", {
             "entry": entry,
@@ -209,7 +212,7 @@ def random(request):
     all_titles = util.list_entries()
 
     # generate a random integer between 0 and length of all_titles
-    z = len(all_titles)
+    z = len(all_titles) - 1
     rando_num = randint(0, z)
 
     # index to rando_num in list of titles and convert to HTML
